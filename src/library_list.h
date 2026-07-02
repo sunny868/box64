@@ -4,6 +4,7 @@
 
 GO("libc.musl-x86_64.so.1", libcmusl)
 GO("librt.so.1", librt)
+GO("libadd.so", libadd)
 GO("libbsd.so.0", libbsd)
 GO("libEGL.so.1", libegl)
 GO("libEGL.so", libegl)

@@ -569,6 +569,7 @@ set(WRAPPEDS
 else()
 set(WRAPPEDS
     "${BOX64_ROOT}/src/wrapped/wrappedalure.c"
+    "${BOX64_ROOT}/src/wrapped/wrappedlibadd.c"
     "${BOX64_ROOT}/src/wrapped/wrappedalut.c"
     "${BOX64_ROOT}/src/wrapped/wrappedatk.c"
     "${BOX64_ROOT}/src/wrapped/wrappedatkbridge.c"

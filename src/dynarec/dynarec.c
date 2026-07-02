@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <syscall.h>
 
 #include "os.h"
 #include "debug.h"
@@ -278,5 +279,6 @@ void EmuRun(x64emu_t* emu, int use_dynarec)
 
 void DynaRun(x64emu_t *emu)
 {
+    fprintf(stderr, "[%ld]DynaRun emu=%p FSBASE=%p\n", syscall(SYS_gettid), emu, emu->segs_offs[_FS]);
     EmuRun(emu, 1);
 }

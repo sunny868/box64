@@ -46,6 +46,7 @@
 #include "sigtools.h"
 
 #include "signal_private.h"
+#include "box64cpu_util.h"
 
 static void sigstack_destroy(void* p)
 {
@@ -742,6 +743,17 @@ void my_box64signalhandler(int32_t sig, siginfo_t* info, void * ucntx)
     void* fpsimd = NULL;
     #warning Unhandled architecture
 #endif
+    if ( sig == SIGBUS && pc) {
+      // ONLY TEST: gysun host call guest "void func(void)"
+      fprintf(stderr, "[%ld]host->guest pc=%p emu=%p FSBASE=%p\n", syscall(SYS_gettid), pc, emu, emu->segs_offs[_FS]);
+      SetRIP(emu, (uintptr_t)pc);
+      Push64(emu, my_context->exit_bridge);
+      DynaRun(emu);
+      emu->quit = 0;
+      p->uc_mcontext.__pc = p->uc_mcontext.__gregs[1];
+      return;
+    }
+
     dynablock_t* db = NULL;
     int db_searched = 0;
     uintptr_t x64pc = (uintptr_t)-1;
